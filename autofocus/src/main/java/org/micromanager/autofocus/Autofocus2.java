@@ -81,7 +81,7 @@ public class Autofocus extends AutofocusBase implements AutofocusPlugin, SciJava
    private static final String NOCHANNEL = "";
    //private static final String AF_SETTINGS_NODE = "micro-manager/extensions/autofocus";
    
-   private static final String AF_DEVICE_NAME = "JAF(H&P)";
+   private static final String AF_DEVICE_NAME = "JAF(H&P)2";
 
    private Studio app_;
    private CMMCore core_;
