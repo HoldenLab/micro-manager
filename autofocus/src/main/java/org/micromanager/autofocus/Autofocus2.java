@@ -36,6 +36,7 @@ import ij.ImagePlus;
 import ij.gui.ImageWindow;
 import ij.process.ByteProcessor;
 import ij.process.ImageProcessor;
+import ij.process.ImageStatistics;
 import ij.process.ShortProcessor;
 
 import java.awt.Color;
@@ -67,7 +68,7 @@ import org.scijava.plugin.SciJavaPlugin;
 
  */
 @Plugin(type = AutofocusPlugin.class)
-public class Autofocus extends AutofocusBase implements AutofocusPlugin, SciJavaPlugin  {
+public class Autofocus2 extends AutofocusBase implements AutofocusPlugin, SciJavaPlugin  {
 
    private static final String KEY_SIZE_FIRST = "1st step size";
    private static final String KEY_NUM_FIRST = "1st step number";
@@ -113,7 +114,7 @@ public class Autofocus extends AutofocusBase implements AutofocusPlugin, SciJava
    private long tPrev;
    private long tcur;
 
-   public Autofocus() {
+   public Autofocus2() {
       super.createProperty(KEY_SIZE_FIRST, Double.toString(SIZE_FIRST));
       super.createProperty(KEY_NUM_FIRST, Integer.toString(NUM_FIRST));
       super.createProperty(KEY_SIZE_SECOND, Double.toString(SIZE_SECOND));
@@ -209,7 +210,7 @@ public class Autofocus extends AutofocusBase implements AutofocusPlugin, SciJava
          tcur = System.currentTimeMillis()-tPrev;*/
 
          //set exposure time, save old one. -kw 181211
-         int oldExposure = core_.getExposure();
+         double oldExposure = core_.getExposure();
          core_.setExposure(EXPOSURE_TIME);
 
          //set z-distance to the lowest z-distance of the stack
@@ -389,6 +390,7 @@ public class Autofocus extends AutofocusBase implements AutofocusPlugin, SciJava
       int ow = (int)(((1-CROP_SIZE)/2)*core_.getImageWidth());
       int oh = (int)(((1-CROP_SIZE)/2)*core_.getImageHeight());
 
+      if(scoringMethod.contentEquals("Edges")){
       // double[][] medPix = new double[width][height];
       double sharpNess = 0;
       //double[] windo = new double[9];
@@ -438,6 +440,14 @@ public class Autofocus extends AutofocusBase implements AutofocusPlugin, SciJava
 	 }*/
 
       return sharpNess;
+      }
+      // Added StDev option. -kw 181217
+      else if(scoringMethod.contentEquals("StDev")){
+          return computeNormalizedStdDev(impro);
+      }
+      else{
+          return 0;
+      }
    }
 
 
@@ -563,5 +573,11 @@ public class Autofocus extends AutofocusBase implements AutofocusPlugin, SciJava
    @Override
    public String getVersion() {
       return "1.0";
+   }
+   
+   // Copied from Oughtafocus.java -kw 181217
+   private double computeNormalizedStdDev(ImageProcessor proc) {
+      ImageStatistics stats = proc.getStatistics();
+      return stats.stdDev / stats.mean;
    }
 }   
