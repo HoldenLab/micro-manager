@@ -9,6 +9,13 @@
 <!-- in the project's Project Properties dialog box.-->
 <project name="DriftCorrectRH" default="default" basedir=".">
     <description>Builds, tests, and runs the project DriftCorrectRH.</description>
+    <property name="sourcefile" value="E:/development/git/micro-manager/plugins/DriftCorrectRH/src/nanoj/liveDriftCorrection/java/DriftCorrection.java"/>
+    <property name="sourcefile" value="E:/development/git/micro-manager/plugins/DriftCorrectRH/src/nanoj/liveDriftCorrection/java/DriftCorrectionCalibration.java"/>
+    <property name="sourcefile" value="E:/development/git/micro-manager/plugins/DriftCorrectRH/src/nanoj/liveDriftCorrection/java/DriftCorrectionData.java"/>
+    <property name="sourcefile" value="E:/development/git/micro-manager/plugins/DriftCorrectRH/src/nanoj/liveDriftCorrection/java/DriftCorrectionGUI.java"/>
+    <property name="sourcefile" value="E:/development/git/micro-manager/plugins/DriftCorrectRH/src/nanoj/liveDriftCorrection/java/DriftCorrectionHardware.java"/>
+    <property name="sourcefile" value="E:/development/git/micro-manager/plugins/DriftCorrectRH/src/nanoj/liveDriftCorrection/java/DriftCorrectionPlugin.java"/>
+    <property name="sourcefile" value="E:/development/git/micro-manager/plugins/DriftCorrectRH/src/nanoj/liveDriftCorrection/java/DriftCorrectionProcess.java"/>
     <import file="nbproject/build-impl.xml"/>
     <!--
 
